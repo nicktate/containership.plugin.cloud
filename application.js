@@ -1,9 +1,10 @@
 'use strict';
 
-const cli = require(`${__dirname}/lib/cli`);
-const cluster_discovery = require(`${__dirname}/cluster_discovery`);
-const follower = require(`${__dirname}/lib/follower`);
-const leader = require(`${__dirname}/lib/leader`);
+const cli = require('./lib/cli');
+const cluster_discovery = require('./cluster_discovery');
+const constants = require('./lib/constants');
+const follower = require('./lib/follower');
+const leader = require('./lib/leader');
 
 const _ = require('lodash');
 const ContainershipPlugin = require('containership.plugin');
@@ -41,10 +42,10 @@ module.exports = new ContainershipPlugin({
                 commands: commands,
                 middleware: [
                     function(options, fn) {
-                        if(options.url.indexOf('https://api.containership.io') == 0) {
+                        if(options.url.indexOf(constants.CLOUD_API_BASE_URL) == 0) {
                             let original_url = options.url;
                             options.url = [
-                                'https://api.containership.io',
+                                constants.CLOUD_API_BASE_URL,
                                 'v2',
                                 'organizations',
                                 options.headers['x-containership-cloud-organization'],

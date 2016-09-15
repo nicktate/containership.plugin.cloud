@@ -1,5 +1,7 @@
 'use strict';
 
+const constants = require('./lib/constants');
+
 const _ = require('lodash');
 const fs = require('fs');
 const request = require('request');
@@ -48,7 +50,7 @@ module.exports = {
 
             get_configuration: function(config, fn) {
                 let options = {
-                    baseUrl: process.env.CONTAINERSHIP_CLOUD_ENV === 'development' ? 'https://stage-api.containership.io' : 'https://api.containership.io',
+                    baseUrl: constants.CLOUD_API_BASE_URL,
                     url: ['', 'v2', 'organizations', config.organization, 'clusters', config.cluster_id, 'configuration'].join('/'),
                     method: 'GET',
                     timeout: 10000,
