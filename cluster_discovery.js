@@ -192,6 +192,18 @@ module.exports = {
                 }
             },
 
+            soft_layer: {
+                parse: function(configuration) {
+                    const ips = _.map(_.flatten([configuration.leaders.instances, configuration.followers.instances]), function(instance) {
+                        if (instance.primaryBackendIpAddress) {
+                            return `${instance.primaryBackendIpAddress}/32`;
+                        }
+                    });
+
+                    return _.compact(ips);
+                }
+            },
+
             linode: {
                 parse: function(configuration) {
                     let ips = _.map(_.flatten([configuration.leaders.instances, configuration.followers.instances]), function(instance) {
