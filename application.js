@@ -16,6 +16,9 @@ module.exports = new ContainershipPlugin({
     type: ['core', 'cli'],
     name: 'cloud',
 
+    // cli version 2
+    cli: require('./lib/cli-v2'),
+
     runCLI: function() {
         let commands = _.map(cli, function(configuration, command) {
             configuration.name = command;
