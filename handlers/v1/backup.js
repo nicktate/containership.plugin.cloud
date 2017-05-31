@@ -24,10 +24,10 @@ module.exports = {
         }
 
         const current_node = core.cluster.legiond.get_attributes();
-        const nodes = _.indexBy(core.cluster.legiond.get_peers(), 'id');
+        const nodes = _.keyBy(core.cluster.legiond.get_peers(), 'id');
         nodes[current_node.id] = current_node;
 
-        _.each(res.stash.body, function(application/*, application_name */) {
+        _.forEach(res.stash.body, function(application/*, application_name */) {
 
             const volumes = _.filter(application.volumes, (volume) => {
                 return volume.host === undefined;
@@ -37,8 +37,8 @@ module.exports = {
                 return;
             }
 
-            _.each(application.containers, (container) => {
-                _.each(container.volumes, (volume) => {
+            _.forEach(application.containers, (container) => {
+                _.forEach(container.volumes, (volume) => {
                     const volume_to_backup = _.find(volumes, (volume_without_host) => {
                         return volume_without_host.container === volume.container;
                     });
