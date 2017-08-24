@@ -4,8 +4,9 @@
   "description": "Offical plugin for interacting with ContainerShip Cloud",
   "main": "application.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "./node_modules/.bin/eslint ."
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "lint": "echo \"Running lint tests...\n\" && ./node_modules/.bin/eslint .",
+    "dependency-check": "echo \"Running dependency checks...\n\" && ./node_modules/.bin/depcheck . --ignores depchecks,yargs"
   },
   "author": "ContainerShip Developers <developers@containership.io>",
   "license": "GPL-3.0",
@@ -21,11 +22,10 @@
     "github": "^2.1.0",
     "glob": "^7.0.3",
     "lodash": "^4.17.4",
+    "mkdirp": "^0.5.1",
     "myriad-kv-client": "^0.5.0",
     "node-schedule": "^1.2.0",
-    "nomnom": "^1.8.1",
     "prompt": "^1.0.0",
-    "read": "^1.0.7",
     "request": "^2.54.0",
     "semver": "^5.0.3",
     "sprintf-js": "^1.0.3",
@@ -46,6 +46,8 @@
   },
   "homepage": "https://github.com/containership/containership.plugin.cloud",
   "devDependencies": {
-    "eslint": "^3.3.1"
+    "@containership/eslint-config-containership.eslint.backend": "^1.0.0",
+    "depcheck": "^0.6.7",
+    "eslint": "^4.5.0"
   }
 }

@@ -5,6 +5,7 @@ const cluster_discovery = require('./cluster_discovery');
 const constants = require('./lib/constants');
 const follower = require('./lib/follower');
 const leader = require('./lib/leader');
+const logger = require('./lib/logger');
 
 const _ = require('lodash');
 const ContainershipPlugin = require('containership.plugin');
@@ -25,11 +26,11 @@ module.exports = new ContainershipPlugin({
             return configuration;
         });
 
-        return{
+        return {
             commands: commands,
             middleware: [
                 function(options, fn) {
-                    if(options.url.indexOf(constants.environment.CLOUD_API_BASE_URL) == 0) {
+                    if(options.url.indexOf(constants.environment.CLOUD_API_BASE_URL) === 0) {
                         let original_url = options.url;
                         options.url = [
                             constants.environment.CLOUD_API_BASE_URL,
@@ -62,7 +63,7 @@ module.exports = new ContainershipPlugin({
                             method: original_method
                         };
 
-                        if((original_method == 'POST' || original_method == 'PUT') && !_.isUndefined(original_body)) {
+                        if((original_method === 'POST' || original_method === 'PUT') && !_.isUndefined(original_body)) {
                             options.json.data = original_body;
                         }
                     }
@@ -102,7 +103,7 @@ module.exports = new ContainershipPlugin({
         cluster_discovery.discover(core.cluster_id || core.options.cluster_id, config, function(err, cidr) {
             if(err) {
                 core.loggers[APPLICATION_NAME].log('error', err.message);
-            } else{
+            } else {
                 core.loggers[APPLICATION_NAME].log('debug', `Discovering peers: ${cidr.join(', ')}`);
 
                 core.cluster.legiond.options.network.cidr = cidr;
@@ -115,8 +116,7 @@ module.exports = new ContainershipPlugin({
 
     stop: function(core) {
         if(!core || !core.logger) {
-            // eslint-disable-next-line no-console
-            return console.warn('CLI does not support stop');
+            return logger.warn('CLI does not support stop');
         } else if(core && core.logger && core.options.mode === 'leader') {
             return module.exports.stopLeader(core);
         } else if(core && core.logger && core.options.mode === 'follower') {

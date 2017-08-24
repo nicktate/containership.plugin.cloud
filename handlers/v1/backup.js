@@ -61,7 +61,7 @@ module.exports = {
                                     volume_id: volume_id
                                 }
                             }, nodes[container.host]);
-                        } else{
+                        } else {
                             errors.push(new Error(`Volume host does not exist for ${container.id}. ${application.id} volumes will not be properly backed up.`));
                         }
                     }
